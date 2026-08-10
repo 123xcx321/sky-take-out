@@ -30,6 +30,12 @@ logging:
         controller: info
 
 sky:
+  alioss:
+    # 阿里云OSS配置
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: ${OSS_ACCESS_KEY_ID}
+    access-key-secret: ${OSS_ACCESS_KEY_SECRET}
+    bucket-name: sky-itcast-xcx-test
   jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: itcast
