@@ -7,9 +7,8 @@ import com.sky.entity.Setmeal;
 import com.sky.entity.ShoppingCart;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealMapper;
-import com.sky.mapper.ShoppingCardMapper;
-import com.sky.result.Result;
-import com.sky.service.ShoppingCardService;
+import com.sky.mapper.ShoppingCartMapper;
+import com.sky.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,10 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class ShoppingCardServiceImpl implements ShoppingCardService {
+public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
-    private ShoppingCardMapper shoppingCardMapper;
+    private ShoppingCartMapper shoppingCartMapper;
     @Autowired
     private DishMapper dishMapper;
     @Autowired
@@ -41,12 +40,12 @@ public class ShoppingCardServiceImpl implements ShoppingCardService {
         Long currentId = BaseContext.getCurrentId();
         shoppingCart.setUserId(currentId);
 
-        List<ShoppingCart> list = shoppingCardMapper.list(shoppingCart);
+        List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
         //如果存在，数量加1
         if (list != null && list.size() > 0) {
             ShoppingCart existShoppingCart = list.get(0);
             existShoppingCart.setNumber(existShoppingCart.getNumber() + 1);
-            shoppingCardMapper.update(existShoppingCart);
+            shoppingCartMapper.update(existShoppingCart);
         } else {
             //如果不存在，插入购物车数据
             Long dishId=shoppingCartDTO.getDishId();
@@ -69,7 +68,7 @@ public class ShoppingCardServiceImpl implements ShoppingCardService {
             shoppingCart.setNumber(1);
             shoppingCart.setCreateTime(LocalDateTime.now());
 
-            shoppingCardMapper.insert(shoppingCart);
+            shoppingCartMapper.insert(shoppingCart);
         }
     }
 
@@ -83,7 +82,7 @@ public class ShoppingCardServiceImpl implements ShoppingCardService {
         ShoppingCart build = ShoppingCart.builder()
                 .userId(currentId)
                 .build();
-        List<ShoppingCart> list = shoppingCardMapper.list(build);
+        List<ShoppingCart> list = shoppingCartMapper.list(build);
         return list;
     }
 
@@ -93,7 +92,7 @@ public class ShoppingCardServiceImpl implements ShoppingCardService {
     @Override
     public void clean() {
         Long currentId = BaseContext.getCurrentId();
-        shoppingCardMapper.deleteByUserId(currentId);
+        shoppingCartMapper.deleteByUserId(currentId);
         log.info("用户：{}，清空购物车", currentId);
     }
 

@@ -3,7 +3,7 @@ package com.sky.controller.user;
 import com.sky.dto.ShoppingCartDTO;
 import com.sky.entity.ShoppingCart;
 import com.sky.result.Result;
-import com.sky.service.ShoppingCardService;
+import com.sky.service.ShoppingCartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Autowired
-    private ShoppingCardService shoppingCardService;
+    private ShoppingCartService shoppingCartService;
 
     /**
      * 添加购物车
@@ -30,7 +30,7 @@ public class ShoppingCartController {
     @ApiOperation("添加购物车")
     public Result add(@RequestBody ShoppingCartDTO shoppingCartDTO){
         log.info("添加购物车：{}", shoppingCartDTO);
-        shoppingCardService.add(shoppingCartDTO);
+        shoppingCartService.add(shoppingCartDTO);
         return Result.success();
     }
 
@@ -41,7 +41,7 @@ public class ShoppingCartController {
     @GetMapping("/list")
     @ApiOperation("查看购物车")
     public Result<List<ShoppingCart>> list(){
-        List<ShoppingCart> list = shoppingCardService.showShoppingCart();
+        List<ShoppingCart> list = shoppingCartService.showShoppingCart();
         return Result.success(list);
     }
 
@@ -52,7 +52,7 @@ public class ShoppingCartController {
     @DeleteMapping("/clean")
     @ApiOperation("清空购物车")
     public Result clean(){
-        shoppingCardService.clean();
+        shoppingCartService.clean();
         return Result.success();
     }
 }
